@@ -1,0 +1,3 @@
+public enum EventType {
+    WORKERS_ON_THE_WAY, HANDEL_SECURITY_CAMERA, TRAFFIC_LIGHT
+}
