@@ -1,27 +1,23 @@
 import java.util.Random;
-
-
 public class EventHandler extends Thread {
     CarAccelerator carAccelerator;
     EventType type = null;
     CarMovement car;
-
     EventHandler(CarAccelerator carAccelerator, EventType type, CarMovement car) {
         // pause the input thread then continue
         this.carAccelerator = carAccelerator;
         this.car = car;
         this.type = type;
     }
-
     @Override
     public void run() {
         if (this.type == EventType.WORKERS_ON_THE_WAY) {
             carAccelerator.changeStatus(false);
             handelWorkerEvent();
             carAccelerator.changeStatus(true);
-        } else if (this.type == EventType.HANDEL_SECURITY_CAMERA) {
+        } else if (this.type == EventType.HANDEL_SPEED_CAMERA) {
             carAccelerator.changeStatus(false);
-            handelSecurityCamera();
+            handelSpeedCamera();
             carAccelerator.changeStatus(true);
         } else if (this.type == EventType.TRAFFIC_LIGHT) {
             carAccelerator.changeStatus(false);
@@ -30,8 +26,6 @@ public class EventHandler extends Thread {
         }
 
     }
-
-
     private void handelWorkerEvent() {
 
         if (car.getSpeed() > 30) {
@@ -62,18 +56,18 @@ public class EventHandler extends Thread {
                 "\n*************************************************");
     }
 
-    private void handelSecurityCamera() {
+    private void handelSpeedCamera() {
         int meters = new Random().nextInt((500 - 100) + 1) + 100;// 100 -250 - 420 - 170
         int distanceTaken = 0;
         System.out.println("--------------------------------------------------" +
-                "Security is detected on #" + meters + " Meters away");
+                "\nspeed camera is detected on #" + meters + " Meters away");
         while (distanceTaken < meters) {
             System.out.println("\nThe car is moving slowly with " + car.speed + " speed , Distance taken is "
                     + distanceTaken + " Distance left is " + (meters - distanceTaken));
             if (car.speed > Constants.OPTIMAL_ROAD_SPEED) {
                 car.speed -= Constants.CHANGE_SPEED_RATE_CONSTANT;
             } else {
-                System.out.println("optimal speed is reached ,heading to security camera with the optimal speed");
+                System.out.println("optimal speed is reached ,heading to speed camera with the optimal speed");
             }
             if (distanceTaken < meters) {
                 distanceTaken += Constants.DISTANCE_RATE_CONSTANT;// speed to distance
@@ -85,7 +79,7 @@ public class EventHandler extends Thread {
                 e.printStackTrace();
             }
         }
-        System.out.println("\nthe car has passed the security camera with the optimal speed \n");
+        System.out.println("\nthe car has passed the speed camera with the optimal speed \n");
 
         System.out.println("\n" +
                 "*************************************************" +
@@ -102,7 +96,6 @@ public class EventHandler extends Thread {
                 "\nTraffic is detected after [" + meters + "] Meters");
         int i = 0;
         while (distanceTaken < meters) {
-
             System.out.println("\nTraffic status is " + "[[ YELLOW ]]" + " car is moving slowly with " + car.speed
                     + " speed , Distance taken is " + distanceTaken + " Distance left is " + (meters - distanceTaken));
 
@@ -111,7 +104,6 @@ public class EventHandler extends Thread {
                 System.out.println("\n!!!! Warning !!!!  The traffic  is now " + "[[ RED ]]" + " Taking Action : Pressing hard brake\n");
                 car.speed -= car.speed;
                 System.out.println("The Car has completely stopped | The traffic light is " + "[[ RED ]]" + " Waiting for the green Light");
-
             } else if (car.speed > 10) {
                 car.speed -= Constants.CHANGE_SPEED_RATE_CONSTANT;
             } else {

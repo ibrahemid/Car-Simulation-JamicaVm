@@ -7,7 +7,8 @@ public class CarSensor implements Runnable {
     EventHandler eventHandler;
     CarAccelerator carAccelerator;
 
-    CarSensor(CarMovement speed, PriorityQueue<EventTypeWithTime> queue, CarAccelerator carAccelerator) {
+    CarSensor(CarMovement speed, PriorityQueue<EventTypeWithTime> queue,
+              CarAccelerator carAccelerator) {
         this.carMovement = speed;
         this.queue = queue;
         this.carAccelerator = carAccelerator;
@@ -26,32 +27,37 @@ public class CarSensor implements Runnable {
                             "\n Event Occurred .... \n" +
                             "##################################################\n\n" +
                             "<!!!!> Workers on the Way <!!!!>  \n");
-                    eventHandler = new EventHandler(carAccelerator, EventType.WORKERS_ON_THE_WAY, carMovement); // check
+                    eventHandler = new EventHandler(carAccelerator, EventType.WORKERS_ON_THE_WAY,
+                            carMovement); // check
                     System.out.println(
                             ">>>> Workers on the way Event Handler Thread Is starting >>>> \n");
                     eventHandler.start();
                     eventTypeWithTime.finished();
                     System.out.println(eventTypeWithTime.toString());
 
-                } else if (event.equals(EventType.HANDEL_SECURITY_CAMERA.toString())) {
+                } // fire the event && measure the time it take
+                else if (event.equals(EventType.HANDEL_SPEED_CAMERA.toString())) {
                     System.out.println("\n##################################################" +
                             "\n Event Occurred .... \n" +
                             "##################################################\n\n" +
-                            "<!!!!> Security Camera on the Road   <!!!!> \n");
-                    eventHandler = new EventHandler(carAccelerator, EventType.HANDEL_SECURITY_CAMERA, carMovement); // check
+                            "<!!!!> Speed Camera on the Road   <!!!!> \n");
+                    eventHandler = new EventHandler(carAccelerator, EventType.HANDEL_SPEED_CAMERA,
+                            carMovement); // check
                     System.out.println(
-                            ">>>> Security Camera on the Road Event Handler Thread Is starting >>>>  \n");
+                            ">>>> speed Camera on the Road Event Handler Thread Is starting >>>>  \n");
                     eventHandler.start();
                     eventTypeWithTime.finished();
                     System.out.println(eventTypeWithTime.toString());
 
 
-                } else if (event.equals(EventType.TRAFFIC_LIGHT.toString())) {
+                }
+                else if (event.equals(EventType.TRAFFIC_LIGHT.toString())) {
                     System.out.println("##################################################" +
                             "\n Event Occurred .... \n" +
                             "##################################################\n\n" +
                             "<!!!!> Detected Traffic Light  <!!!!>");
-                    eventHandler = new EventHandler(carAccelerator, EventType.TRAFFIC_LIGHT, carMovement); // check
+                    eventHandler = new EventHandler(carAccelerator, EventType.TRAFFIC_LIGHT,
+                            carMovement); // check
                     System.out.println(
                             ">>>> Traffic Light Event Handler Thread Is starting >>>>");
                     eventHandler.start();

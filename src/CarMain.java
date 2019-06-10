@@ -2,13 +2,10 @@ import java.util.PriorityQueue;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
 class CarMain {
-
     PriorityQueue<EventTypeWithTime> events = new PriorityQueue<>();
     private CarMovement carMovement;//carMovement feature
     private Thread carAccesleratorTH, sensor, eventThrowerThread;
-
 
     public CarMain() {
         carMovement = new CarMovement();
@@ -16,14 +13,9 @@ class CarMain {
         carAccesleratorTH = accelerator;//sleep afterWhile 5 sec
         sensor = new Thread(new CarSensor(carMovement, events, accelerator));//sleep afterWhile 5 sec
         eventThrowerThread = new Thread(new EventThrower(events));//sleep afterWhile 5 sec 	execute every n second
-
     }
-
     void startCar() {
-        // start the car
-
         carAccesleratorTH.start();
-
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
@@ -37,7 +29,6 @@ class CarMain {
                 eventThrowerThread.start();
             }
         }, 5000);
-
 
     }
 }

@@ -7,7 +7,6 @@ public class EventThrower implements Runnable {
     EventThrower(PriorityQueue<EventTypeWithTime> eventTypeWithTime) {
         this.priorityQueue = eventTypeWithTime;
     }
-
     @Override
     public void run() {
         while (true) {

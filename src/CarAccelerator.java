@@ -1,13 +1,10 @@
 public class CarAccelerator extends Thread {
-
     public boolean status;
     CarMovement carMovement;
-
     CarAccelerator(CarMovement carMovement, boolean status) {
         this.carMovement = carMovement;
         this.status = status;
     }
-
     @Override
     public void run() {
         while (true) {
